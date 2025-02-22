@@ -6,19 +6,25 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+  # Configuration par défaut pour les services dans ce fichier
+  _defaults:
+    autowire: true # Injection automatique des dépendances dans vos services.
+    autoconfigure: true # Enregistrement automatique de vos services comme des commandes, abonnés aux événements, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
+  # Cela permet de rendre les classes dans le répertoire src/ disponibles pour être utilisées comme services
+  # Ce qui crée un service pour chaque classe dont le nom complet est le nom de la classe
+  App\:
+    resource: "../src/"
+    exclude:
+      - "../src/DependencyInjection/"
+      - "../src/Entity/"
+      - "../src/Kernel.php"
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+  # Configuration explicite pour l'écouteur d'événement PasswordEncoderSubscriber
+  App\Events\PasswordEncoderSubscriber:
+    arguments:
+      $passwordHasher: '@security.password_hasher'
+    tags:
+      - { name: "kernel.event_subscriber" }
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones

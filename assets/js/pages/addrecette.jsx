@@ -5,26 +5,28 @@ const AjouterRecetteForm = () => {
   const [nom, setNom] = useState('');
   const [aliments, setAliments] = useState('');
   const [description, setDescription] = useState('');
+  const [imageFile, setImageFile] = useState(null); // Ajout de l'image
 
   const handleNomChange = (e) => setNom(e.target.value);
   const handleAlimentsChange = (e) => setAliments(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
+  const handleImageChange = (e) => setImageFile(e.target.files[0]); // Récupérer le fichier
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Crée un objet avec les données de la recette
-    const recetteData = {
-      Nom: nom,
-      Aliments: aliments,
-      Description: description,
-    };
+    const formData = new FormData();
+    formData.append('Nom', nom);
+    formData.append('Aliments', aliments);
+    formData.append('Description', description);
+    if (imageFile) {
+      formData.append('imageFile', imageFile); // Ajout du fichier image
+    }
 
     try {
-      // Envoyer les données de la recette au backend sous forme de JSON
-      const response = await axios.post('/api/recettes', recetteData, {
+      const response = await axios.post('/api/recettes', formData, {
         headers: {
-          'Content-Type': 'application/ld+json'
+          'Content-Type': 'multipart/form-data', // Important pour l'envoi de fichiers
         },
       });
       console.log('Recette ajoutée', response.data);
@@ -46,6 +48,10 @@ const AjouterRecetteForm = () => {
       <div>
         <label>Description</label>
         <textarea value={description} onChange={handleDescriptionChange} required />
+      </div>
+      <div>
+        <label>Image</label>
+        <input type="file" onChange={handleImageChange} accept="image/*" />
       </div>
       <button type="submit">Ajouter la recette</button>
     </form>

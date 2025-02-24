@@ -141,7 +141,7 @@ class Recette
     #[Groups(['recette:read'])]
     public function getImageUrl(): ?string
     {
-        return $this->imageName ? '/uploads/images/' . $this->imageName : null;
+        return $this->imageName ? '/images/recette/' . $this->imageName : null;
     }
 
     public function getImageFile(): ?File

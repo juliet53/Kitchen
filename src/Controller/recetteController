@@ -1,0 +1,29 @@
+<?php
+namespace App\Controller;
+
+use App\Entity\Recette;
+use App\Repository\RecetteRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+class RecetteController extends AbstractController
+{
+    public function createRecette(Request $request, RecetteRepository $recetteRepository): JsonResponse
+    {
+        // Récupérer les données envoyées en JSON
+        $data = json_decode($request->getContent(), true);
+
+        // Créer une nouvelle instance de Recette
+        $recette = new Recette();
+        $recette->setNom($data['Nom']);
+        $recette->setAliments($data['Aliments']);
+        $recette->setDescription($data['Description']);
+
+        // Enregistrer la recette dans la base de données
+        $recetteRepository->save($recette);
+
+        // Retourner une réponse JSON
+        return new JsonResponse(['message' => 'Recette ajoutée avec succès'], 201);
+    }
+}

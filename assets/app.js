@@ -12,8 +12,11 @@ import './bootstrap.js';
 import './styles/app.css';
 import Navbar from './js/components/Navbar.jsx';
 import HomePage from './js/pages/HomePage.jsx';
+
+
 import { HashRouter,Routes,Route } from 'react-router-dom';
 import RecettePage from './js/pages/RecettesPage.jsx';
+import AjouterRecetteForm from './js/pages/addrecette.jsx';
 
 console.log('Bonjour Monsieur Dahha 🎉');
 const App = () => {
@@ -23,7 +26,8 @@ const App = () => {
 
         <main className='container  pt-5'>
                 <Routes>
-                        <Route path="/Recettes" element={<RecettePage/>} />        
+                        <Route path="/Recettes" element={<RecettePage/>} />
+                        <Route path="/Add" element={<AjouterRecetteForm/>} />
                         <Route path="/" element={<HomePage/>} />
                 </Routes>
                 

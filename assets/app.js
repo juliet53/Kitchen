@@ -1,41 +1,38 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './bootstrap.js';
-
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
-import './styles/app.css';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './js/components/Navbar.jsx';
 import HomePage from './js/pages/HomePage.jsx';
-
-
-import { HashRouter,Routes,Route } from 'react-router-dom';
 import RecettePage from './js/pages/RecettesPage.jsx';
 import AjouterRecetteForm from './js/pages/addrecette.jsx';
+import LoginForm from './js/pages/LoginForm.jsx';
 
 console.log('Bonjour Monsieur Dahha 🎉');
+
 const App = () => {
-        return(
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    return (
         <HashRouter>
-        <Navbar/>
-
-        <main className='container  pt-5'>
+            <Navbar user={user} setUser={setUser} />
+            <main className='container pt-5'>
                 <Routes>
-                        <Route path="/Recettes" element={<RecettePage/>} />
-                        <Route path="/Add" element={<AjouterRecetteForm/>} />
-                        <Route path="/" element={<HomePage/>} />
+                    <Route path="/Recettes" element={<RecettePage />} />
+                    <Route path="/Add" element={ <AjouterRecetteForm /> } />
+                    <Route path="/login" element={<LoginForm setUser={setUser} />} /> 
+                    <Route path="/" element={<HomePage />} />
                 </Routes>
-                
-        </main>
+            </main>
         </HashRouter>
-        ) ;
+    );
 };
-const rootElement = document.getElementById('app');
-const root = ReactDOM.createRoot(rootElement);  
 
-root.render(<App />);
+const rootElement = document.getElementById('app');
+ReactDOM.createRoot(rootElement).render(<App />);

@@ -7,7 +7,9 @@ controllers:
 api_login_check:
   path: /api/login_check
   methods: POST
- 
 
+mes_recettes:
+  path: /api/recettes/moi
+  methods: GET
+  controller: App\Controller\RecetteController::mesRecettes
  
-

@@ -89,7 +89,7 @@ const RecettePage = () => {
                         </div>
                     ))
                 ) : (
-                    <p>Aucune recette trouvée.</p>
+                    <p>Chargement</p>
                 )}
             </div>
         </div>

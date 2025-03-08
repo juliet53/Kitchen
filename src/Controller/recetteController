@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Recette;
@@ -6,9 +7,36 @@ use App\Repository\RecetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RecetteController extends AbstractController
 {
+    #[Route('/api/recettes', name: 'recettes_liste', methods: ['GET'])]
+    public function listeRecettes(RecetteRepository $recetteRepository): JsonResponse
+    {
+        $recettes = $recetteRepository->findAll();
+        return $this->json($recettes, 200, [], ['groups' => 'recette:read']);
+    }
+
+    #[Route('/api/recettes/moi', name: 'mes_recettes', methods: ['GET'])]
+    public function mesRecettes(RecetteRepository $recetteRepository): JsonResponse
+    {
+        $user = $this->getUser();  // Récupère l'utilisateur connecté
+
+        // Si l'utilisateur n'est pas connecté, retourne une erreur
+        if (!$user) {
+            return $this->json(['message' => 'Utilisateur non connecté'], 403);
+        }
+
+        // Récupère toutes les recettes de l'utilisateur connecté
+        $recettes = $recetteRepository->findBy(['user' => $user]);
+
+        // Retourne les recettes de l'utilisateur
+        return $this->json($recettes, 200, [], ['groups' => 'recette:read']);
+    }
+
+    #[Route('/api/recettes', name: 'create_recette', methods: ['POST'])]
     public function createRecette(Request $request, RecetteRepository $recetteRepository): JsonResponse
     {
         // Récupérer les données envoyées en JSON

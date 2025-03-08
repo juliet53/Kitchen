@@ -46,7 +46,7 @@ security:
     - { path: ^/api/commentaires, roles: PUBLIC_ACCESS, methods: [GET] }
     - { path: ^/api/commentaires, roles: IS_AUTHENTICATED, methods: [POST] }
     - { path: ^/api/recettes, roles: PUBLIC_ACCESS, methods: [GET] }
-    - { path: ^/api/recettes, roles: PUBLIC_ACCESS, methods: [POST] } #A changer
+    - { path: ^/api/recettes, roles: IS_AUTHENTICATED, methods: [POST] } #A changer
     #- { path: ^/api/users, roles: IS_AUTHENTICATED , methods: [GET] }
     - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: [POST] }
     # - { path: ^/profile, roles: ROLE_USER }

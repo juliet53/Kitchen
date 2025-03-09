@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const RecettePage = () => {
     const [recettes, setRecettes] = useState([]);
@@ -115,6 +116,7 @@ const RecettePage = () => {
                                                 >
                                                     Supprimer
                                                 </button>
+                                                <Link to={`/recette/${recette.id}`} className="btn btn-outline-primary btn-sm"> Voir Détails</Link>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +124,7 @@ const RecettePage = () => {
                             </div>
                         ))
                     ) : (
-                        <p>Aucune recette trouvée.</p>
+                        <p>Chargement...</p>
                     )}
                 </div>
             )}

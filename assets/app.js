@@ -4,8 +4,9 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './js/components/Navbar.jsx';
 import HomePage from './js/pages/HomePage.jsx';
 import RecettePage from './js/pages/RecettesPage.jsx';
-
+import RecetteDetailPage from "./js/pages/RecetteDetailPage.jsx";
 import AjouterRecetteForm from './js/pages/addrecette.jsx';
+import RegisterForm from "./js/pages/RegisterForm.jsx";
 import LoginForm from './js/pages/LoginForm.jsx';
 import authAPI from './js/services/authAPI.js';
 import MyRecettesPage from './js/pages/myRecette.jsx';
@@ -31,8 +32,9 @@ const App = () => {
                 <Routes>
                     <Route path="/Recettes" element={<RecettePage />} />
                     <Route path="/myRecette" element={<MyRecettesPage />} />
-                  
+                    <Route path="/recette/:id" element={<RecetteDetailPage />} />
                     <Route path="/Add" element={ <AjouterRecetteForm /> } />
+                    <Route path="/inscription" element={<RegisterForm />} />
                     <Route path="/login" element={<LoginForm />} /> 
                     <Route path="/" element={<HomePage />} />
                 </Routes>

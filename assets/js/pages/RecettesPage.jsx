@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const RecettePage = () => {
     const [recettes, setRecettes] = useState([]);
@@ -76,12 +77,7 @@ const RecettePage = () => {
                                             <p className="card-text">
                                                 <small className="text-muted">Dernière mise à jour il y a 3 min</small>
                                             </p>
-                                            <button 
-                                            onClick={()=> handleDelete(recette.id)}
-                                            className="btn btn-sm btn-danger"
-                                            >
-                                                Supprimer
-                                            </button>
+                                            <Link to={`/recette/${recette.id}`} className="btn btn-outline-primary btn-sm"> Voir Détails</Link>
                                         </div>
                                     </div>
                                 </div>
